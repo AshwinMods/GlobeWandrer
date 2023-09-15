@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] float m_InitialDelay;
 	[SerializeField] float m_PickupSpawnDelay = 5;
 	[SerializeField] float m_DropSpawnDelay = 5;
+	[SerializeField] float m_SpawnLimit = 10;
 	[Space]
 	[SerializeField] float m_PlayerWalkSpeed;
 	[SerializeField] float m_PlayerRunSpeed;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField] float m_InitialTimer;
 	[SerializeField] float m_PickupSpawnTimer;
 	[SerializeField] float m_DropSpawnTimer;
+	[SerializeField] List<Transform> m_Pickups;
+	[SerializeField] List<Transform> m_Drops;
 	#endregion
 
 	#region Unity Callabacks
@@ -45,9 +48,9 @@ public class GameManager : MonoBehaviour
 	private void Update()
 	{
 		if (!m_IsPlaying) return;
-		if ((m_InitialTimer += Time.deltaTime) < m_InitialDelay) return;
-
 		ProcessInputs();
+
+		if ((m_InitialTimer += Time.deltaTime) < m_InitialDelay) return;
 		SpawnItems();
 	}
 	#endregion
@@ -73,24 +76,25 @@ public class GameManager : MonoBehaviour
 		{
 			m_PickupSpawnTimer -= m_PickupSpawnDelay;
 			var l_Pickup = m_PickupPrefabs[Random.Range(0, m_PickupPrefabs.Length)];
-			SpawnItemOnSurface(l_Pickup);
+			m_Pickups.Add(SpawnItemOnSurface(l_Pickup));
 		}
 
 		if ((m_DropSpawnTimer += Time.deltaTime) > m_DropSpawnDelay)
 		{
 			m_DropSpawnTimer -= m_DropSpawnDelay;
 			var l_Drop = m_DropPrefabs[Random.Range(0, m_DropPrefabs.Length)];
-			SpawnItemOnSurface(l_Drop);
+			m_Drops.Add(SpawnItemOnSurface(l_Drop));
 		}
 	}
 	#endregion
 
 	#region Public Functions
-	public void SpawnItemOnSurface(Transform a_Prototype)
+	public Transform SpawnItemOnSurface(Transform a_Prototype)
 	{
 		var l_Trans = Instantiate(a_Prototype, m_Planet);
 		l_Trans.position = Random.onUnitSphere * m_PlanetRadius;
 		l_Trans.rotation = Quaternion.FromToRotation(Vector3.up, l_Trans.position); // Item's Down being towards Origin
+		return l_Trans;
 	}
 	#endregion
 }

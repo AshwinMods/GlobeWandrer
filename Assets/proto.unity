@@ -359,6 +359,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ca80dadf3d78c4cacc0ba43c2e9589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MainMenu: {fileID: 0}
+  m_GameplayMenu: {fileID: 0}
+  m_Player: {fileID: 667079244}
+  m_Planet: {fileID: 214240274}
+  m_PickupPrefabs:
+  - {fileID: 40097527499614683, guid: 5e08a88925581b547a1435f8cd5c9fcd, type: 3}
+  m_DropPrefabs:
+  - {fileID: 7147593455559716748, guid: 1a6aa0873d19d61409f6bcc5c84be9c0, type: 3}
+  m_InitialDelay: 3
+  m_PickupSpawnDelay: 5
+  m_DropSpawnDelay: 5
+  m_SpawnLimit: 10
+  m_PlayerWalkSpeed: 10
+  m_PlayerRunSpeed: 20
+  m_PlanetRadius: 50
+  m_IsPlaying: 1
+  m_InitialTimer: 0
+  m_PickupSpawnTimer: 0
+  m_DropSpawnTimer: 0
+  m_Pickups: []
+  m_Drops: []
 --- !u!4 &312751974
 Transform:
   m_ObjectHideFlags: 0
