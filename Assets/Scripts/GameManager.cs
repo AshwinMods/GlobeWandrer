@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] Canvas m_GameplayMenu;
 	[Space]
 	[SerializeField] Transform m_Player;
+	[SerializeField] Animator m_PlrAnimator;
 	[SerializeField] Transform m_Planet;
 	[Space]
 	[SerializeField] Transform[] m_PickupPrefabs;
@@ -69,6 +70,12 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKey(KeyCode.D)) l_Axis += Vector3.forward;
 		l_Axis.Normalize();
 		m_Planet.Rotate(l_Axis, l_Speed, Space.World);
+
+		var l_PlayerForword = Vector3.Cross(m_Player.up, l_Axis);
+		m_Player.forward = l_PlayerForword;
+
+		bool l_IsWalking = (l_Axis != Vector3.zero);
+		m_PlrAnimator.SetBool("IsWalking", l_IsWalking);
 	}
 	private void SpawnItems()
 	{
